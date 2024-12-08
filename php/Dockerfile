@@ -6,10 +6,22 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN apk add --no-cache \
     bash \
+    acl \
+    fcgi \
+    file \
+    gettext \
+    git \
     ;
 
 RUN set -eux; \
-    install-php-extensions pdo pdo_mysql;
+    install-php-extensions \
+     pdo \
+     pdo_mysql \
+     intl \
+     zip \
+     apcu \
+     opcache \
+    ;
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
