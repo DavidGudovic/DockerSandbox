@@ -1,27 +1,31 @@
 services:
   web:
-    build:
-      dockerfile: ./nginx/Dockerfile
+    image: dgudovic/nginx:1.0
     ports:
       - "80:80"
   app:
-    build:
-      dockerfile: ./php/Dockerfile
-      target: app
+    image: dgudovic/php-composer:1.1
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_PORT: ${MYSQL_PORT}
+      REDIS_HOST: cache
+      REDIS_PORT: ${REDIS_PORT}
+    extra_hosts:
+      - host.docker.internal:host-gateway
   db:
     image: mysql:8.0
     volumes:
       - mysqldata:/var/lib/mysql
-    restart: unless-stopped
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: docker-php
-      MYSQL_USER: user
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_PORT: ${MYSQL_PORT}
   cache:
     image: redis:latest
-    ports:
-      - "6379:6379"
-    restart: unless-stopped
 volumes:
   mysqldata:
