@@ -1,6 +1,4 @@
 vendor/
 composer.lock
 .idea/
-.env
-.env.local
 .php_unit.result.cache
