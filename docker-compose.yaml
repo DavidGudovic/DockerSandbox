@@ -7,6 +7,7 @@ services:
   app:
     build:
       dockerfile: ./php/Dockerfile
+      target: app
   db:
     image: mysql:8.0
     volumes:
@@ -17,5 +18,10 @@ services:
       MYSQL_DATABASE: docker-php
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
+  cache:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
 volumes:
   mysqldata:

@@ -8,8 +8,10 @@ services:
   app:
     build:
       dockerfile: ./php/Dockerfile
+      target: app_dev
     volumes:
       - ./app:/var/www/html
+      - ./php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
     environment:
         MYSQL_HOST: db
         MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -18,6 +20,9 @@ services:
         MYSQL_PORT: ${MYSQL_PORT}
         REDIS_HOST: cache
         REDIS_PORT: ${REDIS_PORT}
+        XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    extra_hosts:
+        - host.docker.internal:host-gateway
   db:
     image: mysql:8.0
     volumes:
