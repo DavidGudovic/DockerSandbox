@@ -20,7 +20,7 @@ jobs:
         run: composer run-phpunit
 
       - run: docker build --target app -t dgudovic/php-composer:1.1 -f ./php/Dockerfile .
-      - run: docker build --target nginx -t dgudovic/nginx:1.0 -f ./nginx/Dockerfile .
+      - run: docker build -t dgudovic/nginx:1.0 -f ./nginx/Dockerfile .
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - run: docker push dgudovic/php-composer:1.1
       - run: docker push dgudovic/nginx:1.0
