@@ -1,6 +1,6 @@
 #################################### PHP base image build stage ####################################
 
-FROM php:8.1-fpm-alpine as app
+FROM php:8.1-fpm-alpine AS app
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
@@ -21,7 +21,7 @@ RUN composer dump-autoload --optimize
 
 ############################## X-Debug installation build stage ##################################
 
-FROM app as app_dev
+FROM app AS app_dev
 
 ENV XDEBUG_MODE=off
 
